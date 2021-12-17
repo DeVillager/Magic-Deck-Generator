@@ -8,7 +8,7 @@
       <input v-model="colors[3]" type="checkbox" class="mana-checkbox form-check-input" style="background-color: bisque">
       <input v-model="colors[4]" type="checkbox" class="mana-checkbox form-check-input" style="background-color: black">
     </div>
-    <input v-model="deckSize" type="number" placeholder="Deck size"/>
+    <input v-model="deckSize" type="number" min="1" max="20" placeholder="Deck size (max 20)"/>
     <button @click="createDeck">Create deck</button>
     <div v-if="this.cards.length==0 || this.loading" style="padding-block-start: 30px">
       <h4 style="padding: 70px; border: dashed 5px">{{ getPageText() }}</h4>
@@ -58,6 +58,7 @@ export default {
     },
 
     async createDeck() {
+      this.deckSize = Math.min(this.deckSize, 20);
       this.loading = true;
       const deck = []
       for (let i = 0; i < this.deckSize; i++) {
